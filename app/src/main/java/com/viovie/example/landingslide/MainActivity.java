@@ -1,5 +1,6 @@
 package com.viovie.example.landingslide;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
@@ -21,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        }
+
         setContentView(R.layout.landing_slide_activity_main);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
