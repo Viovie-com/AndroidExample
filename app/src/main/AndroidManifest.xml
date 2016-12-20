@@ -19,5 +19,7 @@
         <activity android:name="com.viovie.example.landingslide.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <!-- Card List Demo -->
+        <activity android:name="com.viovie.example.cardlist.ListActivity" />
     </application>
 </manifest>
