@@ -13,13 +13,17 @@ import com.viovie.example.cardlist.bean.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ListActivity extends AppCompatActivity implements
+        SwipeRefreshLayout.OnRefreshListener, EndlessRecyclerOnScrollListener.EndlessListener {
 
     private List<Card> cardList;
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
+    private EndlessRecyclerOnScrollListener endlessScrollListener;
+
+    private int mLimit = 10;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +31,6 @@ public class ListActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.card_list_activity_list);
 
         cardList = new ArrayList<>();
-        buildSampleCardList(10);
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(this);
@@ -39,11 +42,15 @@ public class ListActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         cardAdapter = new CardAdapter(cardList);
         recyclerView.setAdapter(cardAdapter);
+
+        endlessScrollListener = new EndlessRecyclerOnScrollListener(layoutManager, this);
+        recyclerView.addOnScrollListener(endlessScrollListener);
+
+        // initial load data
+        onLoadMore(EndlessRecyclerOnScrollListener.START_PAGE);
     }
 
     private void buildSampleCardList(int size) {
-        cardList.clear();
-
         for (int i = 0 ; i<size ; i++) {
             cardList.add(new Card("This is title", "Hey, this is content, do you want more?"));
         }
@@ -51,8 +58,18 @@ public class ListActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        buildSampleCardList((int) (Math.random() * 20) + 5);
+        onLoadMore(EndlessRecyclerOnScrollListener.START_PAGE);
+    }
+
+    @Override
+    public void onLoadMore(int page) {
+        if (page == EndlessRecyclerOnScrollListener.START_PAGE) {
+            cardList.clear();
+            endlessScrollListener.reset();
+        }
+        buildSampleCardList(mLimit);
         cardAdapter.notifyDataSetChanged();
         refreshLayout.setRefreshing(false);
+        endlessScrollListener.loadMoreFinished();
     }
 }
