@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,12 +32,26 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder holder, int position) {
+    public void onBindViewHolder(final CardViewHolder holder, int position) {
         Card card = cardList.get(position);
 
         holder.getCardImage().setImageResource(R.mipmap.ic_launcher);
         holder.getCardTitle().setText(card.title);
         holder.getCardContent().setText(card.content);
+        holder.getMoreButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String msg = "Collapse";
+                if (holder.getDefaultHeight() == holder.getCardImage().getHeight()) {
+                    msg = "Collapse";
+                    Tool.toggleView(holder.getCardImage(), 100, 0);
+                } else {
+                    msg = "Expand";
+                    Tool.toggleView(holder.getCardImage(), 100, holder.getDefaultHeight());
+                }
+                ((Button) view).setText(msg);
+            }
+        });
     }
 
     @Override
@@ -48,6 +63,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         private ImageView cardImage;
         private TextView cardTitle;
         private TextView cardContent;
+        private Button moreButton;
+
+        private int defaultHeight;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -55,6 +73,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             cardImage = (ImageView) itemView.findViewById(R.id.card_image);
             cardTitle = (TextView) itemView.findViewById(R.id.card_title);
             cardContent = (TextView) itemView.findViewById(R.id.card_content);
+            moreButton = (Button) itemView.findViewById(R.id.toggle);
+
+            defaultHeight = 240;
         }
 
         public ImageView getCardImage() {
@@ -67,6 +88,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         public TextView getCardContent() {
             return cardContent;
+        }
+
+        public Button getMoreButton() {
+            return moreButton;
+        }
+
+        public int getDefaultHeight() {
+            return defaultHeight;
         }
     }
 }
