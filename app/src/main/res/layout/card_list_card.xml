@@ -47,6 +47,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Collapse"/>
+
+            <Button
+                android:id="@+id/rotate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Rotate"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

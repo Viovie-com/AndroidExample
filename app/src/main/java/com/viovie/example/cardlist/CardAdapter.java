@@ -52,6 +52,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                 ((Button) view).setText(msg);
             }
         });
+        holder.getRotateButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tool.rotateView(holder.getCardImage(), 0, 1000);
+            }
+        });
     }
 
     @Override
@@ -64,6 +70,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         private TextView cardTitle;
         private TextView cardContent;
         private Button moreButton;
+        private Button rotateButton;
 
         private int defaultHeight;
 
@@ -74,6 +81,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             cardTitle = (TextView) itemView.findViewById(R.id.card_title);
             cardContent = (TextView) itemView.findViewById(R.id.card_content);
             moreButton = (Button) itemView.findViewById(R.id.toggle);
+            rotateButton = (Button) itemView.findViewById(R.id.rotate);
 
             defaultHeight = 240;
         }
@@ -96,6 +104,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         public int getDefaultHeight() {
             return defaultHeight;
+        }
+
+        public Button getRotateButton() {
+            return rotateButton;
         }
     }
 }
