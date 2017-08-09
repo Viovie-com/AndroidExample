@@ -29,4 +29,12 @@
         android:layout_marginTop="16dp"
         android:textSize="24sp"
         android:text="Alarm 3 minute later"/>
+
+    <TextView
+        android:id="@+id/youtube_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:text="Start YouTube WebView"/>
 </LinearLayout>

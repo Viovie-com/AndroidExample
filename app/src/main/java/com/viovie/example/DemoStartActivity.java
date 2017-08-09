@@ -31,6 +31,9 @@ public class DemoStartActivity extends AppCompatActivity implements View.OnClick
 
         TextView alarmText = (TextView) findViewById(R.id.alarm_text);
         alarmText.setOnClickListener(this);
+
+        TextView youtubeText = (TextView) findViewById(R.id.youtube_text);
+        youtubeText.setOnClickListener(this);
     }
 
     @Override
@@ -49,6 +52,10 @@ public class DemoStartActivity extends AppCompatActivity implements View.OnClick
 
                 AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                break;
+            }
+            case R.id.youtube_text: {
+                startActivity(new Intent(this, YouTubeWebViewActivity.class));
                 break;
             }
         }
